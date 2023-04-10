@@ -1,6 +1,4 @@
-import { Product } from '@types';
-
-export default [
+exports.productsMock = [
   {
     id: '001',
     title: 'Plumbus',
@@ -29,4 +27,4 @@ export default [
     description: 'The material used in the process of making Plumbuses.',
     price: 5
   },
-] as Product[];
+];

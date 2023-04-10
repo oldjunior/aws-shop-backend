@@ -4,7 +4,7 @@
     "paths": {
       "@functions": ["src/functions/index"],
       "@functions/*": ["src/functions/*"],
-      "@libs/*": ["src/libs/*"],
+      "@services/*": ["src/shared/services/*"],
       "@mocks/*": ["src/mocks/*"],
       "@types": ["src/types/index"]
     }

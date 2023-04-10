@@ -1,19 +1,31 @@
 export interface Product {
   id: string;
   title: string;
-  count: number;
   description: string;
   price: number;
+}
+
+export interface Stocks {
+  id: string;
+  count: number;
+}
+
+export type ProductStocksMerged = Product & Stocks;
+
+export interface Stocks {
+  id: string;
+  count: number;
 }
 
 export interface RESTResponse {
   statusCode: HttpStatusCode;
   headers: Object;
-  body: string;
+  body?: string;
 }
 
 declare enum HttpStatusCode {
   OK = 200,
+  Created = 204,
   NoContent = 204,
   NotFound = 404
 }
