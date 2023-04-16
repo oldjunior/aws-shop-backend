@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@functions": ["src/functions/index"],
+      "@functions/*": ["src/functions/*"],
+      "@services/*": ["src/shared/services/*"],
+      "@mocks/*": ["src/mocks/*"],
+      "@types": ["src/types/index"]
+    }
+  }
+}
