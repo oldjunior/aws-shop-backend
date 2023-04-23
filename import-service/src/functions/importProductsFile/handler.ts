@@ -5,8 +5,6 @@ import {formInternalErrorRESTResponse, formOkRESTResponse} from '@services/api-g
 
 const BUCKET = 'aws-s3-import-service';
 
-const s3 = new AWS.S3({ region: 'eu-west-1' });
-
 export const importProductsFile = async (event: APIGatewayProxyEvent) => {
   const { name: catalogFileName } = event.queryStringParameters;
   const params = {
@@ -15,6 +13,7 @@ export const importProductsFile = async (event: APIGatewayProxyEvent) => {
     Expires: 60,
     ContentType: 'text/csv',
   };
+  const s3 = new AWS.S3({ region: 'eu-west-1' });
 
   try {
     const presignedURL = await s3.getSignedUrlPromise('putObject', params);
