@@ -2,7 +2,7 @@
 
 ## Endpoints
 
-* [/products](https://1r4h0736me.execute-api.eu-west-1.amazonaws.com/dev/products)
-* [/products/{productId}](https://1r4h0736me.execute-api.eu-west-1.amazonaws.com/dev/products/001)
+* [/products](https://p9ab3z37w7.execute-api.eu-west-1.amazonaws.com/dev/products)
+* [/products/{productId}](https://p9ab3z37w7.execute-api.eu-west-1.amazonaws.com/dev/products/0bf90f8b-4f8b-4576-b713-cbfbc330327b)
 
-[Swagger](https://qbyrx6o681.execute-api.eu-west-1.amazonaws.com/swagger)
+[Swagger](https://edlf53b4gh.execute-api.eu-west-1.amazonaws.com/swagger)

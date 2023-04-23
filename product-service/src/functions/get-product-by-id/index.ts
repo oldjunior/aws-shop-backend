@@ -1,4 +1,4 @@
-import { handlerPath } from '@libs/handler-resolver';
+import { handlerPath } from '@services/handler-resolver.service';
 
 export default {
   handler: `${handlerPath(__dirname)}/handler.getProductById`,

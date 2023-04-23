@@ -1,20 +1,30 @@
 import { getProductsList } from '../../../src/functions/get-products-list/handler';
-import { RESTResponseMock } from './handler.mock';
+import { okRESTResponseMock } from './handler.mock';
 
-jest.mock('../../../src/libs/api-gateway');
-import { formRESTResponse } from '../../../src/libs/api-gateway';
+jest.mock('../../../src/shared/services/api-gateway.service');
+jest.mock('../../../src/shared/services/join-tables.service');
+jest.mock('../../../src/shared/services/dynamoDB.service');
+import { getAllItemsOfTable } from '../../../src/shared/services/dynamoDB.service';
+import { joinTables } from '../../../src/shared/services/join-tables.service';
+import { formOkRESTResponse } from '../../../src/shared/services/api-gateway.service';
 
 describe('getProductsList', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should call formRESTResponse and return formatted REST response', async () => {
-    (formRESTResponse as any).mockReturnValue(RESTResponseMock);
+    (formOkRESTResponse as any).mockReturnValue(okRESTResponseMock);
 
     const productListRESTResponse = await getProductsList();
 
-    expect(formRESTResponse).toBeCalled();
+    expect(getAllItemsOfTable).toBeCalledTimes(2);
+    expect(joinTables).toBeCalled();
+    expect(formOkRESTResponse).toBeCalled();
     expect(productListRESTResponse).toMatchObject({
-      statusCode: RESTResponseMock.statusCode,
-      headers: RESTResponseMock.headers,
-      body: RESTResponseMock.body,
+      statusCode: okRESTResponseMock.statusCode,
+      headers: okRESTResponseMock.headers,
+      body: okRESTResponseMock.body,
     });
   });
 });
