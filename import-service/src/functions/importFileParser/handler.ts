@@ -1,5 +1,5 @@
 import { Readable } from 'node:stream';
-import { GetObjectCommand, ListObjectsV2Command, S3Client } from '@aws-sdk/client-s3';
+import { CopyObjectCommand, DeleteObjectCommand, GetObjectCommand, ListObjectsV2Command, S3Client } from '@aws-sdk/client-s3';
 // @ts-ignore
 import csvParser = require('csv-parser');
 
@@ -16,5 +16,17 @@ export const importFileParser = async () => {
 
   (stream as Readable).pipe(csvParser())
     .on('data', data => logger(data))
+    .on('finish', async () => {
+      await s3.send(new CopyObjectCommand({
+        Bucket: BUCKET,
+        CopySource: `${BUCKET}/${bucketObj.Key}`,
+        Key: `parsed/${bucketObj.Key.replace(objList.Prefix, '')}`,
+      }));
+
+      await s3.send(new DeleteObjectCommand({
+        Bucket: BUCKET,
+        Key: bucketObj.Key,
+      }));
+    })
     .on('error', error => logger(error));
 };
