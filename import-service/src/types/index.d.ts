@@ -10,3 +10,22 @@ declare enum HttpStatusCode {
   NoContent = 204,
   NotFound = 404
 }
+
+export interface Product {
+  id: string;
+  title: string;
+  description: string;
+  price: number;
+}
+
+export interface Stocks {
+  id: string;
+  count: number;
+}
+
+export type ProductStocksMerged = Product & Stocks;
+
+export interface Stocks {
+  id: string;
+  count: number;
+}

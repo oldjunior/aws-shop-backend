@@ -1,6 +1,6 @@
 import type { AWS } from '@serverless/typescript';
 
-import { getProductsList, getProductById, createProduct } from '@functions';
+import { getProductsList, getProductById, createProduct, catalogBatchProcess } from '@functions';
 
 const serverlessConfiguration: AWS = {
   service: 'product-service',
@@ -33,6 +33,15 @@ const serverlessConfiguration: AWS = {
         ],
         Resource: '*'
       },
+      {
+        Effect: 'Allow',
+        Action: [
+          'sqs:ReceiveMessage',
+          'sqs:DeleteMessage',
+          'sqs:GetQueueAttributes'
+        ],
+        Resource: '*',
+      },
     ],
   },
   // import the function via paths
@@ -40,6 +49,7 @@ const serverlessConfiguration: AWS = {
     getProductsList,
     getProductById,
     createProduct,
+    catalogBatchProcess
   },
   package: { individually: true },
   custom: {
@@ -48,13 +58,23 @@ const serverlessConfiguration: AWS = {
       minify: false,
       sourcemap: true,
       exclude: ['aws-sdk'],
-      target: 'node14',
+      target: 'node16',
       define: { 'require.resolve': undefined },
       platform: 'node',
       concurrency: 10,
     },
     autoswagger: {
       host: 'p9ab3z37w7.execute-api.eu-west-1.amazonaws.com/dev',
+    },
+  },
+  resources: {
+    Resources: {
+      catalogItemsQueue: {
+        Type: 'AWS::SQS::Queue',
+        Properties: {
+          QueueName: '${self:service}_catalogQueue'
+        },
+      },
     },
   },
 };
