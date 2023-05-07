@@ -42,6 +42,11 @@ const serverlessConfiguration: AWS = {
         ],
         Resource: '*',
       },
+      {
+        Effect: 'Allow',
+        Action: 'sns:*',
+        Resource: '*',
+      },
     ],
   },
   // import the function via paths
@@ -73,6 +78,22 @@ const serverlessConfiguration: AWS = {
         Type: 'AWS::SQS::Queue',
         Properties: {
           QueueName: '${self:service}_catalogQueue'
+        },
+      },
+      catalogSNSTopic: {
+        Type: 'AWS::SNS::Topic',
+        Properties: {
+          TopicName: '${self:service}_catalogSNSTopic'
+        },
+      },
+      catalogSNSSubscription: {
+        Type: 'AWS::SNS::Subscription',
+        Properties: {
+          Endpoint: 'EMAIL_FOR_NOTIFICATIONS',
+          Protocol: 'email',
+          TopicArn: {
+            Ref: 'catalogSNSTopic'
+          },
         },
       },
     },

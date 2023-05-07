@@ -24,11 +24,10 @@ export const importFileParser = async () => {
 
   (stream as Readable).pipe(csvParser())
     .on('data', async (data: Omit<ProductStocksMerged, 'id'>) => {
-      const result = await sqs.send(new SendMessageCommand({
+      await sqs.send(new SendMessageCommand({
         QueueUrl: 'https://sqs.eu-west-1.amazonaws.com/017902256693/product-service_catalogQueue',
         MessageBody: JSON.stringify(data),
       }))
-      console.log(result)
     })
     .on('finish', async () => {
       await s3.send(new CopyObjectCommand({
