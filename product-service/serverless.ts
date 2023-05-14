@@ -69,7 +69,7 @@ const serverlessConfiguration: AWS = {
       concurrency: 10,
     },
     autoswagger: {
-      host: 'p9ab3z37w7.execute-api.eu-west-1.amazonaws.com/dev',
+      host: 'fy7oypucx8.execute-api.eu-west-1.amazonaws.com/dev',
     },
   },
   resources: {
@@ -93,6 +93,20 @@ const serverlessConfiguration: AWS = {
           Protocol: 'email',
           TopicArn: {
             Ref: 'catalogSNSTopic'
+          },
+        },
+      },
+      catalogSNSSubscriptionLowPrice: {
+        Type: 'AWS::SNS::Subscription',
+        Properties: {
+          Endpoint: 'EMAIL_FOR_FILTERED_NOTIFICATIONS',
+          Protocol: 'email',
+          TopicArn: {
+            Ref: 'catalogSNSTopic'
+          },
+          FilterPolicyScope: 'MessageAttributes',
+          FilterPolicy: {
+            is_low_price: ['true'],
           },
         },
       },
