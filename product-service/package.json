@@ -14,8 +14,10 @@
     "node": ">=14.15.0"
   },
   "dependencies": {
+    "@aws-sdk/client-sns": "^3.328.0",
     "@middy/core": "^3.4.0",
-    "@middy/http-json-body-parser": "^3.4.0"
+    "@middy/http-json-body-parser": "^3.4.0",
+    "aws-sdk": "^2.1363.0"
   },
   "devDependencies": {
     "@serverless/typescript": "^3.0.0",
